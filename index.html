@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Quieres ser mi novia?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #fff0f5;
+      height: 100vh;
+      overflow: hidden;
+      background-image: url('https://i.imgur.com/K6aHi7X.jpg'); /* Imagen de Stitch y su novia */
+      background-size: cover;
+      background-position: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: white;
+      margin-top: 50px;
+    }
+
+    button {
+      padding: 30px 60px;
+      font-size: 2em;
+      margin: 30px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border-radius: 15px;
+      border: none;
+    }
+
+    #message {
+      margin-top: 50px;
+      font-size: 2em;
+      color: #ff69b4;
+      display: none;
+    }
+
+    #noMessages {
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #f46d75;
+    }
+
+    .heart {
+      position: absolute;
+      animation: float 6s ease-in-out infinite;
+      font-size: 40px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+      100% { transform: translateY(0); }
+    }
+
+  </style>
+</head>
+<body>
+  <h1>¿Quieres ser mi novia?</h1>
+  <div>
+    <button id="yesBtn">Sí</button>
+    <button id="noBtn">No</button>
+  </div>
+  <div id="noMessages"></div>
+  <div id="message">¡Te amo mucho! ❤️</div>
+
+  <!-- Música de fondo -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://docs.google.com/uc?export=download&id=1hRT8st4N_BukHvvdDH-PvMzLCbVOU0Lw" type="audio/mpeg">
+    Tu navegador no soporta el elemento audio.
+  </audio>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const message = document.getElementById('message');
+    const noMessages = document.getElementById('noMessages');
+    const audio = document.getElementById('bgMusic');
+
+    const frasesNo = [
+      "¿Estás segura de tu respuesta? 😢",
+      "¿De verdad quieres decir que no? 🥺",
+      "Esto no lo esperaba... 😥",
+      "¿Qué pasó? 😞",
+      "Eso me rompe el corazón... 💔",
+      "¿Segura que no quieres pensarlo más? 🤔",
+      "¿Realmente crees que es un no definitivo? 😓"
+    ];
+
+    // Función para crear corazones flotantes
+    function crearCorazones() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '💖';
+
+        const size = Math.random() * 40 + 20;
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = size + "px";
+        heart.style.color = ["#ffb6c1", "#dda0dd", "#ff69b4", "#e6a8d7", "#c71585"][Math.floor(Math.random() * 5)];
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+
+    // Crear corazones flotantes de manera continua
+    setInterval(crearCorazones, 5000);
+
+    // Función para crear más corazones al presionar "Sí"
+    function lanzarMasCorazones() {
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '💖';
+
+        const size = Math.random() * 40 + 20;
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = size + "px";
+        heart.style.color = ["#ffb6c1", "#dda0dd", "#ff69b4", "#e6a8d7", "#c71585"][Math.floor(Math.random() * 5)];
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 6000);
+      }
+    }
+
+    noBtn.addEventListener('click', () => {
+      let currentFontSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+      noBtn.style.fontSize = Math.max(10, currentFontSize - 8) + "px";
+
+      let yesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+      yesBtn.style.fontSize = (yesSize + 8) + "px";
+
+      const randomPhrase = frasesNo[Math.floor(Math.random() * frasesNo.length)];
+      noMessages.textContent = randomPhrase;
+    });
+
+    yesBtn.addEventListener('click', () => {
+      message.style.display = 'block';
+      noMessages.textContent = ''; // Ocultar las frases de "no"
+      lanzarMasCorazones(); // Agregar más corazones cuando se presiona "Sí"
+    });
+  </script>
+</body>
+</html>
